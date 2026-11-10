@@ -4,7 +4,7 @@
 
 A hands-on collection of [LangGraph](https://langchain-ai.github.io/langgraph/) examples, going from simple deterministic workflows to a full agentic chatbot. The notebooks are numbered in learning order.
 
-All examples use **Google Gemini** (`gemini-2.5-flash`) through `langchain-google-genai`.
+All examples use **Google Gemini** (`gemini-3.1-flash-lite`) through `langchain-google-genai`.
 
 ## Highlights
 
@@ -21,9 +21,11 @@ All examples use **Google Gemini** (`gemini-2.5-flash`) through `langchain-googl
 - [uv](https://docs.astral.sh/uv/) (`brew install uv`)
 - Python 3.11+ (uv will download it automatically if missing)
 
-### 2. Install dependencies
+### 2. Clone and install
 
 ```bash
+git clone https://github.com/ylx959/hands-on-langgraph.git
+cd hands-on-langgraph
 uv sync
 ```
 
@@ -31,7 +33,7 @@ This creates `.venv/` and installs everything from `uv.lock`.
 
 ### 3. Set up API keys
 
-Create a `.env` file in the project root. The `Agentic-Chatbot-using-LangGraph/` and `Agentic-Chatbot-using-LangGraph/notebooks/` folders each need one too.
+Create a `.env` file in the project root. The `Agentic-Chatbot-using-LangGraph/` and `Agentic-Chatbot-using-LangGraph/notebooks/` folders each need one too. `.env` files are git-ignored, so your keys are never committed.
 
 ```env
 GOOGLE_API_KEY=your-gemini-key        # required: https://aistudio.google.com/apikey
@@ -62,7 +64,7 @@ cd Agentic-Chatbot-using-LangGraph
 uv run streamlit run app_simple.py     # or app_thread.py / app_db.py / app_tool.py / app_rag.py / app_hitl.py
 ```
 
-Run it from inside that folder so `.env`, `chatbot.db`, and `faiss_db/` resolve correctly.
+Run it from inside that folder so `.env`, `chatbot.db`, and `faiss_db/` resolve correctly. `chatbot.db` is created on first run. `faiss_db/` is built when you upload a PDF in the RAG / HITL apps.
 
 ### Managing packages
 
@@ -80,7 +82,8 @@ Here's how the repository is organized:
 hands-on-langgraph/
 ├── pyproject.toml                          # project metadata and dependencies (uv)
 ├── uv.lock                                 # locked dependency versions
-├── .env                                    # API keys (not committed)
+├── .gitignore
+├── .env                                    # API keys (git-ignored, create your own)
 │
 ├── 1_Temperature_Conversion_workflow.ipynb # basic StateGraph, no LLM
 ├── 2_Simple_QA_LLM_Workflow.ipynb          # first LLM node
@@ -116,7 +119,7 @@ hands-on-langgraph/
     ├── chatbot_with_hitl.py                # standalone HITL chatbot script
     ├── chatbot_without_hitl.py             # standalone chatbot script without HITL
     ├── non_stream.py / test.py             # non-streaming UI and quick test
-    ├── chatbot.db                          # SQLite checkpoint store
-    ├── faiss_db/                           # FAISS vector index
+    ├── chatbot.db                          # SQLite checkpoint store (generated, git-ignored)
+    ├── faiss_db/                           # FAISS vector index (generated, git-ignored)
     └── notebooks/                          # step-by-step demos (chatbot, tools, RAG, HITL)
 ```
